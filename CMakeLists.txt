@@ -7,6 +7,11 @@ project(tutorial)
 # 引入 CTest
 include(CTest)
 
+# 引入函数检查
+include(CheckFunctionExists)
+check_function_exists(log HAVE_LOG)
+check_function_exists(exp HAVE_EXP)
+
 # 版本号
 set (Tutorial_VERSION_MAJOR 1)
 set (Tutorial_VERSION_MINOR 0)

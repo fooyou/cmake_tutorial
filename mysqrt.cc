@@ -3,12 +3,13 @@
  * @Author: Joshua Liu
  * @Email: liuchaozhen@neusoft.com
  * @Create Date: 2016-04-06 08:04:21
- * @Last Modified: 2016-04-06 16:04:08
+ * @Last Modified: 2016-04-06 16:04:56
  * @Description:
  */
 #include <stdio.h>
 #include <stdlib.h>
 #include "mymath.h"
+#include "config.h"
 
 const double PRECISE = 0.00001;
 
@@ -46,5 +47,8 @@ double mysqrt(double num) {
             t = t - (t * t - i) * i;
         // fprintf(stdout, "%dth: %f - %f\n", c, num, t);
     }
+#if defined(HAVE_LOG) && defined(HAVE_EXP)
+    t = exp(log(t) * 0.5);
+#endif
     return t;
 }
