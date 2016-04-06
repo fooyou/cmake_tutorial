@@ -53,21 +53,17 @@ install (FILES "${PROJECT_BINARY_DIR}/config.h" DESTINATION include)
 # 能否正常执行
 add_test(TutorialRuns tutorial 25)
 
-# 求 25 的平方根
-add_test(TutorialComp25 tutorial 25)
-set_tests_properties(TutorialComp25
-    PROPERTIES PASS_REGULAR_EXPRESSION "25 的平方根是 5")
+# 定义测试宏
+macro(do_test arg result)
+    add_test(TutorialComp${arg} tutorial ${arg})
+    set_tests_properties(TutorialComp${arg}
+        PROPERTIES PASS_REGULAR_EXPRESSION ${result})
+endmacro(do_test)
 
-# 求 -25 的平方根
-add_test(TutorialNegative tutorial -25)
-set_tests_properties(TutorialNegative
-    PROPERTIES PASS_REGULAR_EXPRESSION "-25 的平方根是 0")
-
-
-# 求小数的平方根
-add_test(TutorialSmall tutorial 0.0001)
-set_tests_properties(TutorialSmall
-    PROPERTIES PASS_REGULAR_EXPRESSION "0.0001 的平方根是 0.01")
+do_test(25 "25 的平方根是 5")
+do_test(-25 "-25 的平方根是 0")
+do_test(100 "100 的平方根是 10")
+do_test(0.0001 "0.0001 的平方根是 0.01")
 
 # 帮助是否正常
 add_test(TutorialUsage tutorial)
