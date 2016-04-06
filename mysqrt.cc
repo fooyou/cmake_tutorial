@@ -3,7 +3,7 @@
  * @Author: Joshua Liu
  * @Email: liuchaozhen@neusoft.com
  * @Create Date: 2016-04-06 08:04:21
- * @Last Modified: 2016-04-06 14:04:43
+ * @Last Modified: 2016-04-06 16:04:08
  * @Description:
  */
 #include <stdio.h>
@@ -31,14 +31,20 @@ T myabs(T num) {
  */
 double mysqrt(double num) {
     const double i = num;
-    if (myabs<double>(i - PRECISE) < 0)
+    if (i < 0.0) {
+        return 0.0;
+    }
+    if (myabs<double>(i - PRECISE) < 0.0)
         return num;
-    double t = 1;
+    double t = 1.0;
     int c = 0;
     while (myabs<double>(t * t - i) > PRECISE) {
-        c += 1;
-        t = t - (t * t / i) + 1;
-        fprintf(stdout, "%dth: %f - %f\n", c, num, t);
+        c += 1.0;
+        if (i > 1.0)
+            t = t - (t * t / i) + 1.0;
+        else
+            t = t - (t * t - i) * i;
+        // fprintf(stdout, "%dth: %f - %f\n", c, num, t);
     }
     return t;
 }

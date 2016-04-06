@@ -4,6 +4,9 @@ cmake_minimum_required(VERSION 2.6)
 # 指定工程名称
 project(tutorial)
 
+# 引入 CTest
+include(CTest)
+
 # 版本号
 set (Tutorial_VERSION_MAJOR 1)
 set (Tutorial_VERSION_MINOR 0)
@@ -37,3 +40,36 @@ endif (USE_MYMATH)
 add_executable(tutorial main.cc)
 target_link_libraries(tutorial ${EXTRA_LIBS})
 
+#
+# 安装配置
+install (TARGETS mymath DESTINATION bin)
+install (FILES mymath.h DESTINATION include)
+install (TARGETS tutorial DESTINATION bin)
+install (FILES "${PROJECT_BINARY_DIR}/config.h" DESTINATION include)
+
+#
+# 测试
+
+# 能否正常执行
+add_test(TutorialRuns tutorial 25)
+
+# 求 25 的平方根
+add_test(TutorialComp25 tutorial 25)
+set_tests_properties(TutorialComp25
+    PROPERTIES PASS_REGULAR_EXPRESSION "25 的平方根是 5")
+
+# 求 -25 的平方根
+add_test(TutorialNegative tutorial -25)
+set_tests_properties(TutorialNegative
+    PROPERTIES PASS_REGULAR_EXPRESSION "-25 的平方根是 0")
+
+
+# 求小数的平方根
+add_test(TutorialSmall tutorial 0.0001)
+set_tests_properties(TutorialSmall
+    PROPERTIES PASS_REGULAR_EXPRESSION "0.0001 的平方根是 0.01")
+
+# 帮助是否正常
+add_test(TutorialUsage tutorial)
+set_tests_properties(TutorialUsage
+    PROPERTIES PASS_REGULAR_EXPRESSION "用法：.*数")
