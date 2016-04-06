@@ -7,14 +7,14 @@ project(tutorial)
 # 引入 CTest
 include(CTest)
 
-# 引入函数检查
-include(CheckFunctionExists)
-check_function_exists(log HAVE_LOG)
-check_function_exists(exp HAVE_EXP)
-
 # 版本号
 set (Tutorial_VERSION_MAJOR 1)
 set (Tutorial_VERSION_MINOR 0)
+
+# 引入函数检查
+include(${CMAKE_ROOT}/Modules/CheckFunctionExists.cmake)
+check_function_exists(log HAVE_LOG)
+check_function_exists(exp HAVE_EXP)
 
 # 配置一个头文件来传递 CMake 的设置到源代码中
 configure_file (
@@ -32,7 +32,6 @@ option (USE_MYMATH "使用自定义数学函数" ON)
 #
 # 添加自定义 lib
 if (USE_MYMATH)
-    add_library(mymath mysqrt.cc)
     # 添加头文件（被源码引用）
     include_directories("${PROJECT_SOURCE_DIR}/mymath")
     # 添加子目录（好让 lib 被编译）
@@ -47,8 +46,6 @@ target_link_libraries(tutorial ${EXTRA_LIBS})
 
 #
 # 安装配置
-install (TARGETS mymath DESTINATION bin)
-install (FILES mymath.h DESTINATION include)
 install (TARGETS tutorial DESTINATION bin)
 install (FILES "${PROJECT_BINARY_DIR}/config.h" DESTINATION include)
 
