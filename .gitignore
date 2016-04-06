@@ -4,3 +4,5 @@ cmake_install.cmake
 Makefile
 config.h
 tutorial
+*.a
+

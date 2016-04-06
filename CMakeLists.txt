@@ -18,6 +18,22 @@ configure_file (
 # 这样源代码中就可以找到上面配置的 config.h 了
 include_directories("${PROJECT_BINARY_DIR}")
 
+# 定义宏
+option (USE_MYMATH "使用自定义数学函数" ON)
+
+#
+# 添加自定义 lib
+if (USE_MYMATH)
+    add_library(mymath mysqrt.cc)
+    # 添加头文件（被源码引用）
+    include_directories("${PROJECT_SOURCE_DIR}/mymath")
+    # 添加子目录（好让 lib 被编译）
+    add_subdirectory(mymath)
+    set (EXTRA_LIBS ${EXTRA_LIBS} mymath)
+endif (USE_MYMATH)
+
+
 # 指定工程输出为可执行文件 tutotial
 add_executable(tutorial main.cc)
+target_link_libraries(tutorial ${EXTRA_LIBS})
 
