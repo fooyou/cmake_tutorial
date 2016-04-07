@@ -4,12 +4,12 @@ cmake_minimum_required(VERSION 2.6)
 # 指定工程名称
 project(tutorial)
 
-# 引入 CTest
-include(CTest)
-
 # 版本号
 set (Tutorial_VERSION_MAJOR 1)
 set (Tutorial_VERSION_MINOR 0)
+
+# 引入 CTest
+include(CTest)
 
 # 引入函数检查
 include(${CMAKE_ROOT}/Modules/CheckFunctionExists.cmake)
@@ -71,3 +71,10 @@ do_test(0.0001 "0.0001 的平方根是 0.01")
 add_test(TutorialUsage tutorial)
 set_tests_properties(TutorialUsage
     PROPERTIES PASS_REGULAR_EXPRESSION "用法：.*数")
+
+# 创建由 CPack 驱动的安装包
+include(InstallRequiredSystemLibraries)
+set(CPACK_RESOURCE_FILE_LICENSE "${CMAKE_CURRENT_SOURCE_DIR}/license.txt")
+set(CPACK_PACKAGE_VERSION_MAJOR "${Tutorial_VERSION_MAJOR}") 
+set(CPACK_PACKAGE_VERSION_MINOR "${Tutorial_VERSION_MINOR}") 
+include(CPack)

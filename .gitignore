@@ -8,3 +8,11 @@ tutorial
 CTestTestfile.cmake
 DartConfiguration.tcl
 Testing/
+CPackConfig.cmake
+CPackSourceConfig.cmake
+_CPack_Packages/
+install_manifest.txt
+*-Linux.sh
+*-Linux.tar.Z
+*-Linux.tar.gz
+
