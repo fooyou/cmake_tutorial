@@ -3,7 +3,7 @@
  * @Author: Joshua Liu
  * @Email: liuchaozhen@neusoft.com
  * @Create Date: 2016-04-06 08:04:21
- * @Last Modified: 2016-04-06 16:04:56
+ * @Last Modified: 2016-04-11 10:04:41
  * @Description:
  */
 #include <stdio.h>
@@ -41,10 +41,7 @@ double mysqrt(double num) {
     int c = 0;
     while (myabs<double>(t * t - i) > PRECISE) {
         c += 1.0;
-        if (i > 1.0)
-            t = t - (t * t / i) + 1.0;
-        else
-            t = t - (t * t - i) * i;
+        t = (t + i / t) / 2;
         // fprintf(stdout, "%dth: %f - %f\n", c, num, t);
     }
 #if defined(HAVE_LOG) && defined(HAVE_EXP)
